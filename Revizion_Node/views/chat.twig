@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>Chat</title>
+<script src="/socket.io/socket.io.js"></script> 
+</head>
+<body>
+<label>Msg: </label>
+<input id="message" type="text">
+<input  OnClick="send()" type="submit">
+
+<input id="message" onkeyup="sendMessage()" type="text" placeholder="Type your message here">
+ <script>
+  const socket= io.connect();
+  socket.on("msg",(data)=>{
+    console.log("message",data);
+    p = document.createElement("p");
+    p.innerText=(data);
+    document.body.append(p);
+  })
+
+   /* socket.on("typing", function (message) {
+  var notification = new Notification("User is typing", {
+    body: message,
+  });
+});*/
+
+
+ function send(){
+    let message= document.getElementById("message");
+    socket.emit("msg",message.value)
+  }
+
+     // pour partie 8 Afficher une notification lorsqu’un utilisateur est en train d’écrire un message
+    // l’aide de l'événement &quot;onkeyup;
+  /*function sendMessage() {
+  var message = document.getElementById("message").value;
+  socket.emit("typing", message.value);
+}
+*/
+ </script>
+</body>
+
+</html>
